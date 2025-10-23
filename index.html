@@ -81,7 +81,13 @@
         </footer>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+    <script src="https://unpkg.com/tesseract.js@v5.0.0/dist/tesseract.min.js" crossorigin="anonymous"></script>
+    <script>
+        // Fallback to jsdelivr if unpkg fails
+        if (typeof Tesseract === 'undefined') {
+            document.write('<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js" crossorigin="anonymous"><\/script>');
+        }
+    </script>
     <script src="app.js"></script>
 </body>
 </html>
