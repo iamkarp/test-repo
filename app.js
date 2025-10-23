@@ -21,6 +21,16 @@ const opacitySlider = document.getElementById('opacity-slider');
 const opacityValue = document.getElementById('opacity-value');
 const infoSection = document.getElementById('info-section');
 const recognizedText = document.getElementById('recognized-text');
+const errorSection = document.getElementById('error-section');
+const errorMessage = document.getElementById('error-message');
+
+// Check if Tesseract is loaded
+window.addEventListener('load', () => {
+    if (typeof Tesseract === 'undefined') {
+        errorSection.style.display = 'block';
+        errorMessage.textContent = 'ERROR: Tesseract.js library failed to load.\n\nThis could be due to:\n- Network/internet connection issues\n- Ad blocker blocking the CDN\n- Browser compatibility issues\n\nTry:\n1. Checking your internet connection\n2. Disabling ad blockers\n3. Using a different browser\n4. Reloading the page';
+    }
+});
 
 // Initialize Tesseract worker
 async function initializeWorker() {
@@ -162,17 +172,25 @@ processBtn.addEventListener('click', async () => {
     } catch (error) {
         console.error('OCR Error:', error);
 
-        let errorMessage = 'Error processing image.';
+        let userMessage = 'Error processing image.';
+        let detailedError = error.toString() + '\n\nStack trace:\n' + (error.stack || 'No stack trace available');
+
         if (error.message.includes('Timeout')) {
-            errorMessage = error.message;
+            userMessage = error.message;
         } else if (error.message.includes('network') || error.message.includes('fetch')) {
-            errorMessage = 'Network error. Please check your internet connection.';
+            userMessage = 'Network error. Please check your internet connection.';
         } else if (error.message.includes('memory')) {
-            errorMessage = 'Image too large. Try a smaller image.';
+            userMessage = 'Image too large. Try a smaller image.';
+        } else if (typeof Tesseract === 'undefined') {
+            userMessage = 'Tesseract.js library not loaded. Check your internet connection.';
         }
 
-        updateProgress(0, errorMessage);
+        updateProgress(0, userMessage);
         progressText.style.color = '#e74c3c';
+
+        // Show detailed error
+        errorSection.style.display = 'block';
+        errorMessage.textContent = `Error: ${userMessage}\n\n--- Technical Details ---\n${detailedError}\n\n--- Troubleshooting ---\n1. Check your internet connection\n2. Make sure you're using WiFi or good data connection\n3. Try a different image\n4. Try refreshing the page\n5. Try a different browser`;
 
         setTimeout(() => {
             progressSection.style.display = 'none';

@@ -195,6 +195,25 @@ main {
     margin-bottom: 30px;
 }
 
+.error-section {
+    background: #fee;
+    padding: 20px;
+    border-radius: 15px;
+    margin-bottom: 30px;
+    border: 2px solid #e74c3c;
+}
+
+.error-message {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    color: #333;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
 .progress-bar {
     width: 100%;
     height: 30px;
