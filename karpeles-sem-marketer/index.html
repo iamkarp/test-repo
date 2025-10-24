@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Karpeles Museum - SEM Automatic Marketer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Karpeles Museum SEM Marketer</h1>
+            <p class="subtitle">Automated Search Engine Marketing Campaign Generator</p>
+        </header>
+
+        <nav class="tabs">
+            <button class="tab-btn active" data-tab="keywords">Keywords</button>
+            <button class="tab-btn" data-tab="ads">Ad Copy</button>
+            <button class="tab-btn" data-tab="campaigns">Campaigns</button>
+            <button class="tab-btn" data-tab="landing">Landing Pages</button>
+            <button class="tab-btn" data-tab="analytics">Analytics</button>
+        </nav>
+
+        <main>
+            <!-- Keywords Tab -->
+            <div id="keywords" class="tab-content active">
+                <div class="section">
+                    <h2>Keyword Generation</h2>
+                    <div class="config-panel">
+                        <div class="form-group">
+                            <label for="location-select">Target Location:</label>
+                            <select id="location-select">
+                                <option value="all">All Locations</option>
+                                <option value="tacoma">Tacoma, WA</option>
+                                <option value="buffalo">Buffalo, NY</option>
+                                <option value="charleston">Charleston, SC</option>
+                                <option value="jacksonville">Jacksonville, FL</option>
+                                <option value="santa-ana">Santa Ana, CA</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="theme-select">Theme/Collection:</label>
+                            <select id="theme-select">
+                                <option value="all">All Collections</option>
+                                <option value="historical">Historical Documents</option>
+                                <option value="manuscripts">Rare Manuscripts</option>
+                                <option value="educational">Educational Exhibits</option>
+                                <option value="family">Family Activities</option>
+                            </select>
+                        </div>
+                        <button id="generate-keywords-btn" class="btn btn-primary">Generate Keywords</button>
+                    </div>
+                    <div id="keywords-output" class="output-panel"></div>
+                </div>
+            </div>
+
+            <!-- Ad Copy Tab -->
+            <div id="ads" class="tab-content">
+                <div class="section">
+                    <h2>Ad Copy Generator</h2>
+                    <div class="config-panel">
+                        <div class="form-group">
+                            <label for="ad-type-select">Ad Type:</label>
+                            <select id="ad-type-select">
+                                <option value="search">Search Ads</option>
+                                <option value="display">Display Ads</option>
+                                <option value="responsive">Responsive Search Ads</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="ad-theme-select">Campaign Theme:</label>
+                            <select id="ad-theme-select">
+                                <option value="general">General Visit</option>
+                                <option value="free">Free Admission Focus</option>
+                                <option value="educational">Educational Groups</option>
+                                <option value="family">Family Fun</option>
+                                <option value="historical">History Enthusiasts</option>
+                            </select>
+                        </div>
+                        <button id="generate-ads-btn" class="btn btn-primary">Generate Ad Variations</button>
+                    </div>
+                    <div id="ads-output" class="output-panel"></div>
+                </div>
+            </div>
+
+            <!-- Campaigns Tab -->
+            <div id="campaigns" class="tab-content">
+                <div class="section">
+                    <h2>Campaign Structure</h2>
+                    <div class="config-panel">
+                        <div class="form-group">
+                            <label for="budget-input">Monthly Budget ($):</label>
+                            <input type="number" id="budget-input" value="1000" min="100" step="100">
+                        </div>
+                        <div class="form-group">
+                            <label for="campaign-goal-select">Campaign Goal:</label>
+                            <select id="campaign-goal-select">
+                                <option value="awareness">Brand Awareness</option>
+                                <option value="traffic">Website Traffic</option>
+                                <option value="visits">Museum Visits</option>
+                                <option value="engagement">Engagement</option>
+                            </select>
+                        </div>
+                        <button id="generate-campaigns-btn" class="btn btn-primary">Generate Campaign Structure</button>
+                    </div>
+                    <div id="campaigns-output" class="output-panel"></div>
+                </div>
+            </div>
+
+            <!-- Landing Pages Tab -->
+            <div id="landing" class="tab-content">
+                <div class="section">
+                    <h2>Landing Page Content</h2>
+                    <div class="config-panel">
+                        <div class="form-group">
+                            <label for="landing-type-select">Page Type:</label>
+                            <select id="landing-type-select">
+                                <option value="homepage">Homepage Optimization</option>
+                                <option value="location">Location-Specific</option>
+                                <option value="exhibit">Exhibit Spotlight</option>
+                                <option value="visit">Plan Your Visit</option>
+                            </select>
+                        </div>
+                        <button id="generate-landing-btn" class="btn btn-primary">Generate Landing Page Content</button>
+                    </div>
+                    <div id="landing-output" class="output-panel"></div>
+                </div>
+            </div>
+
+            <!-- Analytics Tab -->
+            <div id="analytics" class="tab-content">
+                <div class="section">
+                    <h2>Performance Analytics & Optimization</h2>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <h3>Impressions</h3>
+                            <p class="stat-value" id="stat-impressions">--</p>
+                            <p class="stat-change positive">+12.5%</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Clicks</h3>
+                            <p class="stat-value" id="stat-clicks">--</p>
+                            <p class="stat-change positive">+8.3%</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>CTR</h3>
+                            <p class="stat-value" id="stat-ctr">--</p>
+                            <p class="stat-change positive">+2.1%</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Avg. CPC</h3>
+                            <p class="stat-value" id="stat-cpc">--</p>
+                            <p class="stat-change negative">-5.2%</p>
+                        </div>
+                    </div>
+                    <button id="simulate-analytics-btn" class="btn btn-primary">Simulate Campaign Data</button>
+                    <div id="analytics-output" class="output-panel"></div>
+                </div>
+            </div>
+        </main>
+
+        <div class="action-bar">
+            <button id="export-csv-btn" class="btn btn-secondary">Export to CSV</button>
+            <button id="export-json-btn" class="btn btn-secondary">Export to JSON</button>
+            <button id="reset-btn" class="btn btn-secondary">Reset All</button>
+        </div>
+
+        <footer>
+            <p>Automated SEM Marketing Tool for Karpeles Manuscript Library Museums</p>
+            <p class="note">Note: This tool generates SEM campaigns optimized for promoting free admission and educational content</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
