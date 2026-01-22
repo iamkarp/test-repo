@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kingfall - Chess-Checkers Hybrid</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <header class="game-header">
+            <h1>Kingfall</h1>
+            <p class="subtitle">Chess meets Checkers</p>
+        </header>
+
+        <div class="game-layout">
+            <aside class="player-panel player-black">
+                <h2>Black</h2>
+                <div class="player-info">
+                    <div class="turn-indicator" id="black-turn"></div>
+                    <div class="piece-count" id="black-pieces">12 pieces</div>
+                </div>
+                <div class="evolution-tracker" id="black-evolutions">
+                    <h3>Evolved Pieces</h3>
+                    <div class="evolution-list"></div>
+                </div>
+            </aside>
+
+            <main class="board-container">
+                <div class="board" id="board"></div>
+                <div class="game-message" id="game-message"></div>
+            </main>
+
+            <aside class="player-panel player-white">
+                <h2>White</h2>
+                <div class="player-info">
+                    <div class="turn-indicator active" id="white-turn"></div>
+                    <div class="piece-count" id="white-pieces">12 pieces</div>
+                </div>
+                <div class="evolution-tracker" id="white-evolutions">
+                    <h3>Evolved Pieces</h3>
+                    <div class="evolution-list"></div>
+                </div>
+            </aside>
+        </div>
+
+        <div class="controls">
+            <button id="new-game" class="btn btn-primary">New Game</button>
+            <button id="undo" class="btn btn-secondary">Undo</button>
+        </div>
+
+        <div class="rules-panel">
+            <h3>Evolution Guide</h3>
+            <div class="evolution-guide">
+                <div class="evolution-step">
+                    <span class="piece-icon pawn-icon"></span>
+                    <span class="arrow">→</span>
+                    <span class="capture-count">1 capture</span>
+                    <span class="arrow">→</span>
+                    <span class="piece-icon scout-icon"></span>
+                    <span class="piece-name">Scout (diagonal)</span>
+                </div>
+                <div class="evolution-step">
+                    <span class="piece-icon scout-icon"></span>
+                    <span class="arrow">→</span>
+                    <span class="capture-count">2 captures</span>
+                    <span class="arrow">→</span>
+                    <span class="piece-icon tower-icon"></span>
+                    <span class="piece-name">Tower (orthogonal)</span>
+                </div>
+                <div class="evolution-step">
+                    <span class="piece-icon tower-icon"></span>
+                    <span class="arrow">→</span>
+                    <span class="capture-count">3 captures</span>
+                    <span class="arrow">→</span>
+                    <span class="piece-icon knight-icon"></span>
+                    <span class="piece-name">Knight (L-shape)</span>
+                </div>
+                <div class="evolution-step">
+                    <span class="piece-icon knight-icon"></span>
+                    <span class="arrow">→</span>
+                    <span class="capture-count">4 captures</span>
+                    <span class="arrow">→</span>
+                    <span class="piece-icon queen-icon"></span>
+                    <span class="piece-name">Queen (any direction)</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="evolution-modal">
+        <div class="modal-content">
+            <h2>Evolution!</h2>
+            <p id="evolution-text"></p>
+            <div class="evolution-animation" id="evolution-animation"></div>
+        </div>
+    </div>
+
+    <div class="modal" id="game-over-modal">
+        <div class="modal-content">
+            <h2 id="winner-text"></h2>
+            <p id="game-over-reason"></p>
+            <button id="play-again" class="btn btn-primary">Play Again</button>
+        </div>
+    </div>
+
+    <script src="pieces.js"></script>
+    <script src="game.js"></script>
+    <script src="ui.js"></script>
+</body>
+</html>
