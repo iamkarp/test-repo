@@ -1,10 +1,13 @@
 import { useEffect } from 'react';
 import { useGameStore } from './engine/store';
-import { Terminal, CommandInput, StatusBar, Inventory, MiniMap } from './ui';
+import { Terminal, CommandInput, ArtPane } from './ui';
 import './App.css';
 
 function App() {
   const initialize = useGameStore((state) => state.initialize);
+  const inventory = useGameStore((state) => state.inventory);
+  const currentRoomId = useGameStore((state) => state.currentRoomId);
+  const turn = useGameStore((state) => state.turn);
 
   useEffect(() => {
     initialize();
@@ -12,26 +15,26 @@ function App() {
 
   return (
     <div className="game-container">
-      <div className="game-header">
-        <h1>CAVE OF THE ICE WIZARD</h1>
-      </div>
+      {/* Main game area - Sierra style layout */}
+      <div className="game-screen">
+        {/* Large pixel art pane - top 70% */}
+        <div className="art-container">
+          <ArtPane />
+        </div>
 
-      <div className="game-content">
-        <div className="main-panel">
+        {/* Text area - bottom 30% */}
+        <div className="text-area">
           <Terminal />
           <CommandInput />
         </div>
-
-        <div className="side-panel">
-          <StatusBar />
-          <Inventory />
-          <MiniMap />
-        </div>
       </div>
 
-      <div className="game-footer">
-        <span>A Retro Text Adventure</span>
-        <span className="footer-hint">Type HELP for commands</span>
+      {/* Status bar at very bottom */}
+      <div className="status-bar-bottom">
+        <span className="status-item">Room: {currentRoomId.replace(/_/g, ' ')}</span>
+        <span className="status-item">Items: {inventory.length}</span>
+        <span className="status-item">Turn: {turn}</span>
+        <span className="status-item hint">Type HELP for commands</span>
       </div>
     </div>
   );

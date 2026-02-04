@@ -1,20 +1,14 @@
-/* Retro Text Adventure Styles */
+/* Sierra-Style Adventure Game - Like the game from Big (1988) */
 
 @import url('https://fonts.googleapis.com/css2?family=VT323&family=Press+Start+2P&display=swap');
 
 :root {
-  --bg-color: #0a0a0a;
-  --terminal-bg: #0d1117;
-  --panel-bg: #161b22;
-  --border-color: #30363d;
-  --text-primary: #c9d1d9;
-  --text-secondary: #8b949e;
-  --text-command: #58a6ff;
-  --text-error: #f85149;
-  --text-system: #7ee787;
-  --text-highlight: #ffa657;
-  --glow-color: #58a6ff33;
-  --scanline-color: rgba(0, 0, 0, 0.1);
+  --bg-color: #000000;
+  --border-color: #444444;
+  --text-primary: #FFFFFF;
+  --text-command: #55FFFF;
+  --text-error: #FF5555;
+  --text-system: #55FF55;
 }
 
 * {
@@ -27,91 +21,83 @@ body {
   background-color: var(--bg-color);
   color: var(--text-primary);
   font-family: 'VT323', monospace;
-  font-size: 18px;
-  line-height: 1.4;
-  min-height: 100vh;
+  font-size: 20px;
+  line-height: 1.3;
+  height: 100vh;
   overflow: hidden;
 }
 
 #root {
-  max-width: 100%;
-  margin: 0;
-  padding: 0;
-  text-align: left;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
 }
 
-/* Main Game Container */
+/* Main Game Container - 4:3 aspect ratio like old CRT */
 .game-container {
+  width: 100%;
+  max-width: 960px;
+  height: 100%;
+  max-height: 720px;
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 1rem;
-  gap: 0.5rem;
+  border: 4px solid var(--border-color);
+  background-color: var(--bg-color);
+  box-shadow: 0 0 20px rgba(0, 170, 170, 0.3);
 }
 
-/* Game Header */
-.game-header {
-  text-align: center;
-  padding: 0.5rem;
-  border: 2px solid var(--border-color);
-  background: linear-gradient(180deg, var(--panel-bg) 0%, var(--bg-color) 100%);
-}
-
-.game-header h1 {
-  font-family: 'Press Start 2P', cursive;
-  font-size: 1.5rem;
-  color: var(--text-highlight);
-  text-shadow: 0 0 10px var(--text-highlight), 0 0 20px var(--text-highlight);
-  letter-spacing: 2px;
-}
-
-/* Game Content Area */
-.game-content {
-  display: flex;
+/* Game screen area (art + text) */
+.game-screen {
   flex: 1;
-  gap: 0.5rem;
+  display: flex;
+  flex-direction: column;
   min-height: 0;
 }
 
-/* Main Terminal Panel */
-.main-panel {
+/* Art container - takes up ~65% of game screen */
+.art-container {
+  flex: 0 0 65%;
+  background-color: #000000;
+  border-bottom: 3px solid var(--border-color);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.art-pane {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.art-pane svg {
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+/* Text area - bottom ~35% */
+.text-area {
   flex: 1;
   display: flex;
   flex-direction: column;
-  border: 2px solid var(--border-color);
-  background-color: var(--terminal-bg);
-  position: relative;
-  overflow: hidden;
+  background-color: #000000;
+  min-height: 0;
 }
 
-/* CRT Scanline Effect */
-.main-panel::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 2px,
-    var(--scanline-color) 2px,
-    var(--scanline-color) 4px
-  );
-  pointer-events: none;
-  z-index: 10;
-}
-
-/* Terminal Output */
+/* Terminal output */
 .terminal {
   flex: 1;
   overflow-y: auto;
-  padding: 1rem;
+  padding: 8px 12px;
   font-size: 1.1rem;
-  line-height: 1.5;
+  line-height: 1.4;
 }
 
 .terminal::-webkit-scrollbar {
@@ -119,23 +105,18 @@ body {
 }
 
 .terminal::-webkit-scrollbar-track {
-  background: var(--bg-color);
+  background: #111;
 }
 
 .terminal::-webkit-scrollbar-thumb {
-  background: var(--border-color);
-  border-radius: 4px;
+  background: #444;
 }
 
-.terminal::-webkit-scrollbar-thumb:hover {
-  background: var(--text-secondary);
-}
-
-/* Log Entries */
+/* Log entries */
 .log-entry {
   white-space: pre-wrap;
   word-wrap: break-word;
-  margin-bottom: 0.2rem;
+  margin-bottom: 2px;
 }
 
 .log-narration {
@@ -144,7 +125,6 @@ body {
 
 .log-command {
   color: var(--text-command);
-  font-weight: bold;
 }
 
 .log-error {
@@ -155,19 +135,19 @@ body {
   color: var(--text-system);
 }
 
-/* Command Input */
+/* Command input */
 .command-input-container {
   display: flex;
   align-items: center;
-  padding: 0.75rem 1rem;
-  border-top: 1px solid var(--border-color);
-  background-color: var(--panel-bg);
+  padding: 6px 12px;
+  border-top: 2px solid var(--border-color);
+  background-color: #111;
 }
 
 .prompt {
   color: var(--text-command);
   font-size: 1.2rem;
-  margin-right: 0.5rem;
+  margin-right: 8px;
   font-weight: bold;
 }
 
@@ -183,239 +163,96 @@ body {
 }
 
 .command-input::placeholder {
-  color: var(--text-secondary);
-  opacity: 0.5;
+  color: #666;
 }
 
-/* Blinking cursor effect */
-.command-input:focus {
-  animation: cursor-blink 1s step-end infinite;
-}
-
-@keyframes cursor-blink {
-  50% {
-    caret-color: transparent;
-  }
-}
-
-/* Side Panel */
-.side-panel {
-  width: 280px;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-/* Panel Sections */
-.panel-header {
-  font-family: 'Press Start 2P', cursive;
-  font-size: 0.7rem;
-  color: var(--text-highlight);
-  padding: 0.5rem;
-  border-bottom: 1px solid var(--border-color);
-  letter-spacing: 1px;
-}
-
-/* Status Bar */
-.status-bar {
-  border: 2px solid var(--border-color);
-  background-color: var(--panel-bg);
-  padding: 0.75rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.status-bar > div {
+/* Bottom status bar - like Sierra games */
+.status-bar-bottom {
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-
-.status-label {
-  color: var(--text-secondary);
+  padding: 6px 12px;
+  background-color: #222;
+  border-top: 2px solid var(--border-color);
   font-size: 0.9rem;
+  gap: 20px;
 }
 
-.status-value {
+.status-item {
   color: var(--text-primary);
-  font-weight: bold;
+  text-transform: capitalize;
 }
 
-.status-light .torch-icon {
-  font-size: 1.2rem;
-  animation: flicker 0.5s infinite;
-}
-
-@keyframes flicker {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.8; }
-}
-
-.status-end {
-  text-align: center;
-  font-family: 'Press Start 2P', cursive;
-  font-size: 0.6rem;
-  padding: 0.5rem;
-  border-radius: 4px;
-  animation: pulse 1s infinite;
-}
-
-.status-end.victory {
-  background-color: rgba(126, 231, 135, 0.2);
-  color: var(--text-system);
-}
-
-.status-end.defeat {
-  background-color: rgba(248, 81, 73, 0.2);
-  color: var(--text-error);
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.7; }
-}
-
-/* Inventory Panel */
-.inventory-panel {
-  border: 2px solid var(--border-color);
-  background-color: var(--panel-bg);
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  min-height: 120px;
-}
-
-.inventory-list {
-  padding: 0.5rem;
-  overflow-y: auto;
-  flex: 1;
-}
-
-.inventory-empty {
-  color: var(--text-secondary);
+.status-item.hint {
+  color: #888;
   font-style: italic;
-  text-align: center;
-  padding: 1rem;
 }
 
-.inventory-item {
-  padding: 0.25rem 0.5rem;
-  margin-bottom: 0.25rem;
-  background-color: rgba(88, 166, 255, 0.1);
-  border-left: 2px solid var(--text-command);
-  color: var(--text-primary);
+/* CRT scanline effect overlay */
+.game-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.15) 2px,
+    rgba(0, 0, 0, 0.15) 4px
+  );
+  pointer-events: none;
+  z-index: 100;
 }
 
-.inventory-item:hover {
-  background-color: rgba(88, 166, 255, 0.2);
-  cursor: pointer;
+.game-container {
+  position: relative;
 }
 
-/* Mini Map Panel */
-.minimap-panel {
-  border: 2px solid var(--border-color);
-  background-color: var(--panel-bg);
-  flex: 1;
-  display: flex;
-  flex-direction: column;
+/* Screen flicker animation */
+@keyframes flicker {
+  0% { opacity: 0.97; }
+  50% { opacity: 1; }
+  100% { opacity: 0.98; }
 }
 
-.minimap {
-  padding: 0.5rem;
-  font-size: 0.7rem;
-  line-height: 1;
-  overflow: auto;
-  flex: 1;
+.art-container {
+  animation: flicker 0.15s infinite;
 }
 
-.map-row {
-  display: flex;
-  white-space: pre;
-}
-
-.map-cell {
-  color: var(--text-secondary);
-  opacity: 0.3;
-}
-
-.map-cell.visited {
-  color: var(--text-primary);
-  opacity: 0.7;
-}
-
-.map-cell.current {
-  color: var(--text-highlight);
-  opacity: 1;
-  font-weight: bold;
-  text-shadow: 0 0 5px var(--text-highlight);
-}
-
-.map-cell.unvisited {
-  color: var(--text-secondary);
-  opacity: 0.3;
-}
-
-/* Game Footer */
-.game-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.5rem 1rem;
-  border: 2px solid var(--border-color);
-  background-color: var(--panel-bg);
-  font-size: 0.9rem;
-  color: var(--text-secondary);
-}
-
-.footer-hint {
-  color: var(--text-command);
-}
-
-/* Responsive Design */
-@media (max-width: 900px) {
-  .game-content {
-    flex-direction: column;
+/* Responsive adjustments */
+@media (max-width: 700px) {
+  .game-container {
+    max-width: 100%;
+    max-height: 100%;
   }
 
-  .side-panel {
-    width: 100%;
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
-
-  .status-bar {
-    flex: 1;
-    min-width: 200px;
-  }
-
-  .inventory-panel,
-  .minimap-panel {
-    flex: 1;
-    min-width: 200px;
-    min-height: 100px;
-  }
-}
-
-@media (max-width: 600px) {
-  .game-header h1 {
-    font-size: 1rem;
+  .art-container {
+    flex: 0 0 55%;
   }
 
   .terminal {
-    font-size: 1rem;
+    font-size: 0.95rem;
   }
 
-  .minimap-panel {
-    display: none;
+  .status-bar-bottom {
+    flex-wrap: wrap;
+    font-size: 0.8rem;
+    gap: 10px;
+  }
+}
+
+@media (max-height: 600px) {
+  .art-container {
+    flex: 0 0 50%;
   }
 }
 
 /* Accessibility */
 @media (prefers-reduced-motion: reduce) {
-  .status-light .torch-icon,
-  .status-end,
-  .command-input:focus {
+  .art-container {
     animation: none;
   }
 }
