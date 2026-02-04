@@ -1,0 +1,123 @@
+import type { Room } from '../engine/types';
+
+export const rooms: Record<string, Room> = {
+  cave_entrance: {
+    id: 'cave_entrance',
+    name: 'Cave Entrance',
+    description: 'You stand at the mouth of a dark cave. Cold air flows from within, carrying whispers of ancient magic. Ice crystals glitter on the walls, catching what little light filters in from outside. The path behind you leads back to the frozen wasteland.',
+    exits: { north: 'torch_hall', south: 'outside' },
+    items: ['old_torch'],
+    artKey: 'entrance',
+  },
+  outside: {
+    id: 'outside',
+    name: 'Frozen Wasteland',
+    description: 'A bitter wind howls across the endless expanse of ice and snow. The cave entrance offers the only shelter for miles. You sense that your destiny lies within those frozen depths.',
+    exits: { north: 'cave_entrance' },
+    items: [],
+    artKey: 'wasteland',
+  },
+  torch_hall: {
+    id: 'torch_hall',
+    name: 'Torch Hall',
+    description: 'A long corridor stretches before you. Empty torch brackets line the walls, their previous flames long extinguished. The ice here has formed strange patterns, almost like frozen screams.',
+    exits: { south: 'cave_entrance', north: 'crystal_chamber', east: 'storage_alcove' },
+    items: [],
+    dark: true,
+    artKey: 'hall',
+  },
+  storage_alcove: {
+    id: 'storage_alcove',
+    name: 'Storage Alcove',
+    description: 'A small nook carved into the ice wall. Ancient adventurers once stored supplies here. Most have been pillaged or frozen solid, but something glints beneath a layer of frost.',
+    exits: { west: 'torch_hall' },
+    items: ['rusty_key', 'frozen_scroll'],
+    dark: true,
+    artKey: 'alcove',
+  },
+  crystal_chamber: {
+    id: 'crystal_chamber',
+    name: 'Crystal Chamber',
+    description: 'Massive ice crystals jut from every surface, refracting light into prismatic rainbows. The chamber hums with magical energy. A heavy stone door blocks the eastern passage. To the west, a narrow crack leads into darkness.',
+    exits: { south: 'torch_hall', east: 'ice_bridge', west: 'hidden_grotto' },
+    items: ['crystal_shard'],
+    blockedExits: {
+      east: { flag: 'stone_door_open', message: 'The heavy stone door is sealed shut. There must be a way to open it.' },
+    },
+    artKey: 'crystal',
+  },
+  hidden_grotto: {
+    id: 'hidden_grotto',
+    name: 'Hidden Grotto',
+    description: 'You squeeze through the narrow crack into a secret grotto. Bioluminescent moss covers the ceiling, casting an eerie blue glow. In the center, a frozen pool reflects strange constellations that exist nowhere in the sky above.',
+    exits: { east: 'crystal_chamber' },
+    items: ['thermal_orb'],
+    artKey: 'grotto',
+  },
+  ice_bridge: {
+    id: 'ice_bridge',
+    name: 'Ice Bridge',
+    description: 'A treacherous bridge of solid ice spans a bottomless chasm. Far below, you hear the rush of an underground river. The bridge is slick and narrow - one wrong step could be fatal. The wizard\'s domain lies ahead.',
+    exits: { west: 'crystal_chamber', east: 'antechamber' },
+    items: [],
+    artKey: 'bridge',
+  },
+  antechamber: {
+    id: 'antechamber',
+    name: 'Antechamber',
+    description: 'You\'ve entered the outer sanctum of the Ice Wizard\'s lair. Frozen statues of previous adventurers line the walls - their faces locked in eternal terror. A locked iron gate blocks the northern passage. Runes glow faintly on its surface.',
+    exits: { west: 'ice_bridge', north: 'wizard_throne' },
+    items: ['rune_tablet'],
+    blockedExits: {
+      north: { flag: 'iron_gate_open', message: 'The iron gate is locked. Ancient runes pulse with cold energy across its surface.' },
+    },
+    artKey: 'antechamber',
+  },
+  wizard_throne: {
+    id: 'wizard_throne',
+    name: 'Throne of Ice',
+    description: 'The heart of the Ice Wizard\'s domain. A massive throne carved from a single glacier dominates the chamber. The wizard himself sits upon it - a towering figure of frost and malice, with eyes like frozen stars. "SO, ANOTHER FOOL COMES TO CHALLENGE ME," his voice echoes like cracking ice.',
+    exits: { south: 'antechamber', north: 'treasure_vault' },
+    items: [],
+    blockedExits: {
+      north: { flag: 'wizard_defeated', message: 'The wizard blocks your path. His cold gaze freezes you in place.' },
+    },
+    artKey: 'throne',
+  },
+  treasure_vault: {
+    id: 'treasure_vault',
+    name: 'Treasure Vault',
+    description: 'Mountains of frozen gold and jewels fill this chamber. But more precious than any treasure is what you see ahead - the exit to freedom, and warm sunlight streaming through an opening in the ice.',
+    exits: { south: 'wizard_throne', north: 'freedom' },
+    items: ['crown_of_frost', 'ancient_gold'],
+    artKey: 'vault',
+  },
+  freedom: {
+    id: 'freedom',
+    name: 'Sunlit Exit',
+    description: 'You emerge from the frozen depths into brilliant sunlight. The warmth washes over you like a blessing. Behind you, the cave begins to collapse as the wizard\'s magic fades. You have survived the Cave of the Ice Wizard!',
+    exits: {},
+    items: [],
+    artKey: 'freedom',
+  },
+};
+
+export const startRoom = 'cave_entrance';
+
+export const introText = [
+  '═══════════════════════════════════════════════════════',
+  '       CAVE OF THE ICE WIZARD',
+  '       A Retro Text Adventure',
+  '═══════════════════════════════════════════════════════',
+  '',
+  'Legend speaks of a powerful wizard who dwells deep within',
+  'the frozen caves of the northern wastes. Many have entered',
+  'seeking his legendary treasure. None have returned.',
+  '',
+  'You stand before the entrance, your breath crystallizing',
+  'in the frigid air. Whatever lies within, you must face it.',
+  'Your destiny awaits in the frozen depths...',
+  '',
+  'Type HELP for a list of commands.',
+  '═══════════════════════════════════════════════════════',
+];

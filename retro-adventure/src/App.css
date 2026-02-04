@@ -1,0 +1,258 @@
+/* Sierra-Style Adventure Game - Like the game from Big (1988) */
+
+@import url('https://fonts.googleapis.com/css2?family=VT323&family=Press+Start+2P&display=swap');
+
+:root {
+  --bg-color: #000000;
+  --border-color: #444444;
+  --text-primary: #FFFFFF;
+  --text-command: #55FFFF;
+  --text-error: #FF5555;
+  --text-system: #55FF55;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  font-family: 'VT323', monospace;
+  font-size: 20px;
+  line-height: 1.3;
+  height: 100vh;
+  overflow: hidden;
+}
+
+#root {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
+
+/* Main Game Container - 4:3 aspect ratio like old CRT */
+.game-container {
+  width: 100%;
+  max-width: 960px;
+  height: 100%;
+  max-height: 720px;
+  display: flex;
+  flex-direction: column;
+  border: 4px solid var(--border-color);
+  background-color: var(--bg-color);
+  box-shadow: 0 0 20px rgba(0, 170, 170, 0.3);
+}
+
+/* Game screen area (art + text) */
+.game-screen {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+/* Art container - takes up ~65% of game screen */
+.art-container {
+  flex: 0 0 65%;
+  background-color: #000000;
+  border-bottom: 3px solid var(--border-color);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.art-pane {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.art-pane svg {
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+/* Text area - bottom ~35% */
+.text-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #000000;
+  min-height: 0;
+}
+
+/* Terminal output */
+.terminal {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px 12px;
+  font-size: 1.1rem;
+  line-height: 1.4;
+}
+
+.terminal::-webkit-scrollbar {
+  width: 8px;
+}
+
+.terminal::-webkit-scrollbar-track {
+  background: #111;
+}
+
+.terminal::-webkit-scrollbar-thumb {
+  background: #444;
+}
+
+/* Log entries */
+.log-entry {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  margin-bottom: 2px;
+}
+
+.log-narration {
+  color: var(--text-primary);
+}
+
+.log-command {
+  color: var(--text-command);
+}
+
+.log-error {
+  color: var(--text-error);
+}
+
+.log-system {
+  color: var(--text-system);
+}
+
+/* Command input */
+.command-input-container {
+  display: flex;
+  align-items: center;
+  padding: 6px 12px;
+  border-top: 2px solid var(--border-color);
+  background-color: #111;
+}
+
+.prompt {
+  color: var(--text-command);
+  font-size: 1.2rem;
+  margin-right: 8px;
+  font-weight: bold;
+}
+
+.command-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  font-family: 'VT323', monospace;
+  font-size: 1.2rem;
+  outline: none;
+  caret-color: var(--text-command);
+}
+
+.command-input::placeholder {
+  color: #666;
+}
+
+/* Bottom status bar - like Sierra games */
+.status-bar-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 12px;
+  background-color: #222;
+  border-top: 2px solid var(--border-color);
+  font-size: 0.9rem;
+  gap: 20px;
+}
+
+.status-item {
+  color: var(--text-primary);
+  text-transform: capitalize;
+}
+
+.status-item.hint {
+  color: #888;
+  font-style: italic;
+}
+
+/* CRT scanline effect overlay */
+.game-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.15) 2px,
+    rgba(0, 0, 0, 0.15) 4px
+  );
+  pointer-events: none;
+  z-index: 100;
+}
+
+.game-container {
+  position: relative;
+}
+
+/* Screen flicker animation */
+@keyframes flicker {
+  0% { opacity: 0.97; }
+  50% { opacity: 1; }
+  100% { opacity: 0.98; }
+}
+
+.art-container {
+  animation: flicker 0.15s infinite;
+}
+
+/* Responsive adjustments */
+@media (max-width: 700px) {
+  .game-container {
+    max-width: 100%;
+    max-height: 100%;
+  }
+
+  .art-container {
+    flex: 0 0 55%;
+  }
+
+  .terminal {
+    font-size: 0.95rem;
+  }
+
+  .status-bar-bottom {
+    flex-wrap: wrap;
+    font-size: 0.8rem;
+    gap: 10px;
+  }
+}
+
+@media (max-height: 600px) {
+  .art-container {
+    flex: 0 0 50%;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .art-container {
+    animation: none;
+  }
+}

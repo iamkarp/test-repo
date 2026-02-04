@@ -1,0 +1,112 @@
+import type { Item } from '../engine/types';
+
+export const items: Record<string, Item> = {
+  old_torch: {
+    id: 'old_torch',
+    name: 'old torch',
+    aliases: ['torch', 'old torch', 'wooden torch'],
+    description: 'A weathered wooden torch wrapped in oil-soaked rags. It looks like it could still be lit if you had a way to ignite it.',
+    portable: true,
+    usableOn: ['crystal_shard'],
+    onUse: 'light_torch',
+  },
+  rusty_key: {
+    id: 'rusty_key',
+    name: 'rusty key',
+    aliases: ['key', 'rusty key', 'old key', 'iron key'],
+    description: 'A heavy iron key covered in rust and frost. Despite its age, the teeth are still intact. It might fit an old lock.',
+    portable: true,
+    usableOn: ['iron_gate'],
+    onUse: 'use_rusty_key',
+  },
+  frozen_scroll: {
+    id: 'frozen_scroll',
+    name: 'frozen scroll',
+    aliases: ['scroll', 'frozen scroll', 'ancient scroll'],
+    description: 'A scroll encased in a thin layer of ice. You can barely make out strange symbols through the frost. It speaks of the wizard\'s one weakness - the Thermal Orb, hidden in a secret grotto.',
+    portable: true,
+    onExamine: 'read_scroll',
+  },
+  crystal_shard: {
+    id: 'crystal_shard',
+    name: 'crystal shard',
+    aliases: ['crystal', 'shard', 'ice crystal', 'glowing crystal'],
+    description: 'A sharp fragment of magical crystal that pulses with inner light. It\'s warm to the touch - unusual for something found in these frozen depths.',
+    portable: true,
+    usableOn: ['old_torch'],
+    onUse: 'light_torch',
+  },
+  thermal_orb: {
+    id: 'thermal_orb',
+    name: 'thermal orb',
+    aliases: ['orb', 'thermal orb', 'magic orb', 'warm orb', 'glowing orb'],
+    description: 'A sphere of swirling orange and red energy, warm as a summer day. This is the legendary Thermal Orb - said to be the only thing capable of defeating the Ice Wizard.',
+    portable: true,
+    usableOn: ['wizard'],
+    onUse: 'use_thermal_orb',
+  },
+  rune_tablet: {
+    id: 'rune_tablet',
+    name: 'rune tablet',
+    aliases: ['tablet', 'rune tablet', 'stone tablet', 'runes'],
+    description: 'A stone tablet inscribed with glowing blue runes. The inscription reads: "THE GATE YIELDS TO THE KEY OF RUST AND TIME."',
+    portable: true,
+    onExamine: 'read_tablet',
+  },
+  crown_of_frost: {
+    id: 'crown_of_frost',
+    name: 'crown of frost',
+    aliases: ['crown', 'frost crown', 'ice crown', 'wizard crown'],
+    description: 'The Ice Wizard\'s crown, now yours by right of conquest. It radiates cold power but no longer poses any threat.',
+    portable: true,
+  },
+  ancient_gold: {
+    id: 'ancient_gold',
+    name: 'ancient gold',
+    aliases: ['gold', 'treasure', 'coins', 'gold coins'],
+    description: 'A handful of ancient gold coins, perfectly preserved by the cold. Each is stamped with the symbol of a forgotten kingdom.',
+    portable: true,
+  },
+  // Non-portable features/objects
+  stone_door: {
+    id: 'stone_door',
+    name: 'stone door',
+    aliases: ['door', 'stone door', 'heavy door', 'eastern door'],
+    description: 'A massive door carved from solid stone, covered in frost. There\'s a small slot in the center that looks like it might accept something.',
+    portable: false,
+    usableOn: ['crystal_shard'],
+    onUse: 'open_stone_door',
+  },
+  iron_gate: {
+    id: 'iron_gate',
+    name: 'iron gate',
+    aliases: ['gate', 'iron gate', 'locked gate', 'rune gate'],
+    description: 'A formidable iron gate covered in glowing runes. It looks ancient but incredibly strong. There\'s a rusty keyhole on one side.',
+    portable: false,
+    usableOn: ['rusty_key'],
+    onUse: 'open_iron_gate',
+  },
+  wizard: {
+    id: 'wizard',
+    name: 'Ice Wizard',
+    aliases: ['wizard', 'ice wizard', 'mage', 'sorcerer', 'frost wizard'],
+    description: 'A towering figure of living ice and malevolent power. His eyes burn with cold blue fire, and frost forms wherever his gaze falls. He regards you with contempt - just another frozen trophy for his collection.',
+    portable: false,
+    usableOn: ['thermal_orb'],
+    onUse: 'defeat_wizard',
+  },
+  frozen_adventurers: {
+    id: 'frozen_adventurers',
+    name: 'frozen adventurers',
+    aliases: ['statues', 'frozen statues', 'adventurers', 'frozen people', 'ice statues'],
+    description: 'These poor souls were once brave adventurers like yourself. Now they stand frozen for eternity, their faces twisted in their final moments of terror. You vow not to share their fate.',
+    portable: false,
+  },
+};
+
+// Feature items that exist in rooms but aren't in the items list
+export const roomFeatures: Record<string, string[]> = {
+  crystal_chamber: ['stone_door'],
+  antechamber: ['iron_gate', 'frozen_adventurers'],
+  wizard_throne: ['wizard'],
+};
