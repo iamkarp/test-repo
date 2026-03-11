@@ -1,82 +1,64 @@
-Handwriting OCR Overlay App
-===========================
+# BirdCLEF 2026 - Bird Sound Classification
 
-A web application that reads handwritten text from documents and creates an interactive overlay showing the recognized text over the original handwriting.
+Kaggle competition solution for [BirdCLEF 2026](https://www.kaggle.com/competitions/birdclef-2026): identifying bird and wildlife species from audio recordings using deep learning.
 
-## Features
+## Project Structure
 
-- Upload images of handwritten documents
-- Automatic handwriting recognition using Tesseract.js OCR engine
-- Real-time text overlay positioned over detected handwriting
-- Toggle overlay visibility on/off
-- Adjustable overlay opacity
-- Responsive design that works on desktop and mobile devices (including iPhone)
-- No backend required - runs entirely in the browser
-
-## How to Use
-
-1. Open `index.html` in a web browser
-2. Click "Choose Image" to upload a document with handwriting
-3. Click "Process Handwriting" to run OCR analysis
-4. View the recognized text overlay on your document
-5. Use the controls to toggle overlay visibility and adjust opacity
-
-## Running the App
-
-### Option 1: Direct File Access
-Simply open `index.html` in your web browser.
-
-### Option 2: Local Server (Recommended)
-For better performance and to avoid CORS issues:
-
-```bash
-# Using Python 3
-python -m http.server 8000
-
-# Using Node.js
-npx http-server
-
-# Using PHP
-php -S localhost:8000
+```
+├── configs/default.yaml       # Training & inference hyperparameters
+├── src/
+│   ├── preprocess.py          # Audio → mel spectrogram pipeline
+│   ├── dataset.py             # PyTorch datasets & K-fold splits
+│   ├── models.py              # SED model with timm backbones
+│   ├── train.py               # Training loop with validation
+│   ├── inference.py           # Soundscape inference & submission
+│   └── utils.py               # Seed, metrics, config loading
+├── scripts/
+│   ├── download_data.sh       # Download competition data
+│   └── run_training.sh        # Launch training
+├── notebooks/eda.ipynb        # Exploratory data analysis
+└── requirements.txt           # Python dependencies
 ```
 
-Then navigate to `http://localhost:8000` in your browser.
+## Quick Start
 
-## Mobile Support
+```bash
+# Install dependencies
+pip install -r requirements.txt
 
-The app works on mobile devices including iPhone and Android phones. When using on mobile:
-- The file picker will allow you to take a new photo or choose from your gallery
-- OCR processing may take longer on mobile devices
-- The interface automatically adapts to smaller screens
+# Download competition data
+bash scripts/download_data.sh
 
-## Technologies Used
+# Train (all folds)
+bash scripts/run_training.sh
 
-- HTML5
-- CSS3 with responsive design
-- JavaScript (ES6+)
-- Tesseract.js v5 (OCR engine)
+# Train (single fold)
+bash scripts/run_training.sh configs/default.yaml 0
 
-## Browser Compatibility
+# Inference
+python -m src.inference --config configs/default.yaml
+```
 
-- Chrome/Edge (recommended)
-- Firefox
-- Safari (including iOS Safari)
-- Opera
+## Approach
 
-## Performance Notes
+- **Audio preprocessing**: 5-second windows converted to 128-bin mel spectrograms (32kHz, hop=320)
+- **Model**: EfficientNet-B0 (timm) with classification head
+- **Training**: 5-fold stratified CV, Focal BCE loss, AdamW + cosine LR
+- **Augmentation**: Time/frequency masking, mixup
+- **Inference**: Sliding window over 1-minute soundscapes, ensemble across folds
+- **Metric**: Macro-averaged ROC-AUC
 
-- Initial OCR engine loading may take a few seconds
-- Processing time depends on image size and complexity
-- For best results, use clear, well-lit images of handwriting
-- Recommended image formats: JPG, PNG, WebP
+## Configuration
 
-## Tips for Best Results
+All hyperparameters are in `configs/default.yaml`. Key settings:
 
-1. Use high-quality, well-lit images
-2. Ensure handwriting is clear and legible
-3. Avoid overly stylized or cursive handwriting for better recognition
-4. Keep images at a reasonable resolution (not too small or excessively large)
-
-## License
-
-MIT License
+| Parameter | Value |
+|-----------|-------|
+| Sample rate | 32,000 Hz |
+| Window duration | 5 seconds |
+| Mel bins | 128 |
+| Backbone | tf_efficientnet_b0_ns |
+| Batch size | 64 |
+| Learning rate | 1e-3 |
+| Epochs | 50 |
+| Folds | 5 |

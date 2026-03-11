@@ -1,0 +1,62 @@
+# BirdCLEF 2026 - Default Configuration
+
+# Competition
+competition: birdclef-2026
+seed: 42
+
+# Audio
+audio:
+  sample_rate: 32000
+  duration: 5  # seconds
+  hop_length: 320
+  n_fft: 1024
+  n_mels: 128
+  fmin: 20
+  fmax: 16000
+
+# Model
+model:
+  backbone: tf_efficientnet_b0_ns
+  pretrained: true
+  num_classes: 206  # Update when species list is finalized
+  in_channels: 1
+
+# Training
+training:
+  epochs: 50
+  batch_size: 64
+  lr: 1.0e-3
+  weight_decay: 1.0e-5
+  scheduler: cosine
+  warmup_epochs: 3
+  n_folds: 5
+  label_smoothing: 0.01
+
+# Loss
+loss:
+  name: focal_bce
+  gamma: 2.0
+  alpha: 0.25
+
+# Augmentation
+augmentation:
+  mixup_alpha: 0.5
+  time_mask_max: 60
+  freq_mask_max: 24
+  gaussian_noise_snr: [5, 40]
+
+# Inference
+inference:
+  window_size: 5  # seconds
+  hop_size: 2.5   # seconds (overlapping windows)
+  batch_size: 128
+  tta: false
+
+# Paths
+paths:
+  data_dir: ./data
+  train_audio: ./data/birdclef-2026/train_audio
+  test_soundscapes: ./data/birdclef-2026/test_soundscapes
+  train_csv: ./data/birdclef-2026/train_metadata.csv
+  output_dir: ./outputs
+  checkpoint_dir: ./outputs/checkpoints
